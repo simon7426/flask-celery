@@ -1,4 +1,4 @@
-from celery import current_app as currnet_celery_app
+from celery import current_app as current_celery_app
 
 def make_celery(app):
     celery = current_celery_app
