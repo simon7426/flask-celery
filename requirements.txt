@@ -5,3 +5,5 @@ flower
 Flask-Migrate
 Flask-SQLAlchemy
 Flask-CeleryExt
+psycopg2-binary
+watchgod
