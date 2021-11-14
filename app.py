@@ -1,4 +1,5 @@
-from project import create_app, ext_celery
+from logging import debug
+from project import create_app, ext_celery, socketio
 
 app = create_app()
 celery = ext_celery.celery
@@ -17,3 +18,11 @@ def celery_worker():
             ["celery","-A","app.celery","worker","--loglevel=info"]
         )
     run_process("./project",run_worker)
+
+if __name__ == '__main__':
+    socketio.run(
+        app,
+        debug=True,
+        use_reloader=True,
+        host='0.0.0.0'
+    )

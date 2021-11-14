@@ -2,7 +2,7 @@ import random
 import logging
 import requests
 from celery.result import AsyncResult
-from flask import Blueprint, render_template, flash, abort,request, Response, jsonify, current_app
+from flask import Blueprint, json, render_template, flash, abort,request, Response, jsonify, current_app
 from project import csrf
 from . import users_blueprint
 
@@ -57,3 +57,13 @@ def webhook_test_2():
     task = task_process_notification.delay()
     current_app.logger.info(task.id)
     return 'pong'
+
+@users_blueprint.route('/form_ws/',methods=('GET','POST'))
+def subscribe_ws():
+    form = YourForm()
+    if form.validate_on_submit():
+        task = sample_task.delay(form.email.data)
+        return jsonify({
+            'task_id': task.task_id,
+        })
+    return render_template('form_ws.html',form=form)
