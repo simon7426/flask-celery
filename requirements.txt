@@ -10,7 +10,7 @@ watchgod
 Flask-WTF
 requests
 flask-socketio
-eventlet
+eventlet==0.30.2
 pytest
 pytest-flask
 factory-boy
