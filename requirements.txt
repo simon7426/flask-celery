@@ -16,3 +16,4 @@ pytest-flask
 factory-boy
 pytest-factoryboy
 pytest-cov
+Pillow
