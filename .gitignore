@@ -4,3 +4,4 @@ db.sqlite3
 migrations
 __pycache__/app.cpython-38.pyc
 upload
+project.tar
