@@ -9,7 +9,8 @@ from . import users_blueprint
 from string import ascii_lowercase
 
 from project.users.forms import YourForm
-from project.users.tasks import sample_task, task_process_notification, task_send_welcome_email
+from project.users.tasks import sample_task, task_add_subscribe, task_process_notification, task_send_welcome_email
+
 
 def api_call(email):
     if random.choice([0,1]):
@@ -91,4 +92,29 @@ def transaction_celery():
     current_app.logger.info(f'user {user.id} {user.username} is persistant now.')
     task_send_welcome_email.delay(user.id)
     return 'done'
+
+@users_blueprint.route('/user_subscribe/',methods=('GET','POST'))
+def user_subscribe():
+    form = YourForm()
+    if form.validate_on_submit():
+        try:
+            user = db.session.query(User).filter_by(
+                username=form.username.data
+            ).first()
+            if user:
+                user_id = user.id
+            else:
+                user = User(
+                    username=form.username.data,
+                    email=form.email.data,
+                )
+                db.session.add(user)
+                db.session.commit()
+                user_id = user.id
+        except Exception as e:
+            db.session.rollback()
+            raise
+        task_add_subscribe.delay(user_id)
+        return 'sent task to Celery successfully.'
+    return render_template('user_subscribe.html',form=form)
 

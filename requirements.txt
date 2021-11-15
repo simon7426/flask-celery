@@ -11,3 +11,8 @@ Flask-WTF
 requests
 flask-socketio
 eventlet
+pytest
+pytest-flask
+factory-boy
+pytest-factoryboy
+pytest-cov

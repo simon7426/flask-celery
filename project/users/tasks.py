@@ -57,3 +57,16 @@ def task_send_welcome_email(user_pk):
     from project.users.models import User
     user = User.query.get(user_pk)
     logger.info(f'Send email to {user.email} {user.id}')
+
+@shared_task(bind=True)
+def task_add_subscribe(self,user_pk):
+    try:
+        from project.users.models import User
+        user = User.query.get(user_pk)
+        requests.post(
+            'https://httpbin.org/delay/5',
+            data={'email': user.email},
+        )
+    except Exception as exc:
+        raise self.retry(exc=exc)
+
