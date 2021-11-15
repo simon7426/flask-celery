@@ -18,7 +18,7 @@ rsync ./project.tar ubuntu@$BRILLIANT_CLOUD_IP_ADDRESS:/tmp/project.tar
 echo 'Uploading project...'
 
 echo 'Building image...'
-ssh -o StrictHostKeyChecking=no root@$BRILLIANT_CLOUD_IP_ADDRESS << 'ENDSSH'
+ssh -o StrictHostKeyChecking=no ubuntu@$BRILLIANT_CLOUD_IP_ADDRESS << 'ENDSSH'
     mkdir -p /app
     rm -rf /app/* && tar -xf /tmp/project.tar -C /app
     docker-compose -f /app/docker-compose.prod.yml build
