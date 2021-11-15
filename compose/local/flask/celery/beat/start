@@ -1,9 +1,8 @@
 #!/bin/bash
 
 set -o errexit
-set -o pipefail
 set -o nounset
 
-rm -r './celerybeat.pid'
+rm -f './celerybeat.pid'
 
-celery -A app.celery beat -l info
+celery -A celery_app.celery beat -l info

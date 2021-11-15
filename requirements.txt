@@ -10,3 +10,4 @@ watchgod
 Flask-WTF
 requests
 flask-socketio
+eventlet
