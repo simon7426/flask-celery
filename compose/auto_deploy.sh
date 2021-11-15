@@ -19,8 +19,9 @@ echo 'Uploading project...'
 
 echo 'Building image...'
 ssh -o StrictHostKeyChecking=no ubuntu@$BRILLIANT_CLOUD_IP_ADDRESS << 'ENDSSH'
-    mkdir -p /app
-    rm -rf /app/* && tar -xf /tmp/project.tar -C /app
+    sudo mkdir -p /app
+    sudo rm -rf /app/* && sudo tar -xf /tmp/project.tar -C /app
     docker-compose -f /app/docker-compose.prod.yml build
+    sudo supervisorctl restart flask-celery-app
 ENDSSH
 echo 'Build complete.'
